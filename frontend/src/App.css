@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+/* ---------------- SPLASH SCREEN ---------------- */
+
+.splash-container {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  visibility: visible;
+}
+
+.splash-container.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.splash-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+  animation: scaleUp 1s ease-in-out;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
