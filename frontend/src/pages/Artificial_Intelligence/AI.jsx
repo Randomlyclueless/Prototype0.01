@@ -1,3 +1,5 @@
+// src/pages/AI.jsx
+
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../components/ThemeContext";
@@ -37,146 +39,81 @@ const syllabusData = [
       "Explore AI tools (e.g., chatbots). Assignment: Analyze an AI case study.",
   },
   {
-    name: "Mathematical Foundations",
-    icon: BookOpen,
-    topics: [
-      "Linear algebra",
-      "Calculus",
-      "Probability and statistics",
-      "Information theory",
-    ],
-    subtopics: [
-      "Vectors, matrices, eigenvalues, SVD",
-      "Gradients, optimization, partial derivatives",
-      "Distributions, Bayes’ theorem, hypothesis testing",
-      "Entropy, KL divergence",
-    ],
-    practical:
-      "Python exercises with NumPy/SciPy. Assignment: Implement gradient descent.",
-  },
-  {
-    name: "Machine Learning Fundamentals",
+    name: "Intelligent Agents",
     icon: Cpu,
-    topics: [
-      "Supervised learning",
-      "Unsupervised learning",
-      "Evaluation metrics",
-      "Regularization",
-    ],
-    subtopics: [
-      "Linear regression, logistic regression, SVMs",
-      "Clustering (k-means, hierarchical), PCA",
-      "Accuracy, precision, recall, F1-score, ROC curves",
-      "Overfitting, underfitting, L1/L2 regularization",
-    ],
-    practical:
-      "Build models with scikit-learn. Assignment: Train and tune a classifier.",
+    topics: [],
+    subtopics: [],
+    practical: "",
   },
   {
-    name: "Deep Learning",
+    name: "Uninformed Search",
     icon: Network,
-    topics: [
-      "Neural network basics",
-      "Architectures",
-      "Frameworks",
-      "Transfer learning",
-    ],
-    subtopics: [
-      "Perceptrons, activation functions, backpropagation",
-      "CNNs, RNNs, LSTMs, Transformers",
-      "TensorFlow, PyTorch, JAX",
-      "Pre-trained models",
-    ],
-    practical:
-      "Build a CNN for image classification. Assignment: Fine-tune a BERT model.",
+    topics: [],
+    subtopics: [],
+    practical: "",
   },
   {
-    name: "Natural Language Processing",
-    icon: MessageCircle,
-    topics: [
-      "Text preprocessing",
-      "Word embeddings",
-      "Sequence models",
-      "Applications",
-    ],
-    subtopics: [
-      "Tokenization, stemming, lemmatization",
-      "Word2Vec, GloVe, BERT embeddings",
-      "RNNs, LSTMs, attention mechanisms",
-      "Chatbots, translation, sentiment analysis",
-    ],
-    practical:
-      "Build a chatbot with Hugging Face. Assignment: Text classification model.",
-  },
-  {
-    name: "Computer Vision",
+    name: "Informed Search",
     icon: Eye,
-    topics: [
-      "Image processing",
-      "CNN architectures",
-      "Object detection",
-      "Generative models",
-    ],
-    subtopics: [
-      "Filters, edge detection",
-      "VGG, ResNet, YOLO",
-      "Segmentation, object detection",
-      "GANs",
-    ],
-    practical:
-      "Implement YOLO for object detection. Assignment: Generate images with a GAN.",
+    topics: [],
+    subtopics: [],
+    practical: "",
   },
   {
-    name: "Reinforcement Learning",
-    icon: Zap,
-    topics: ["Markov decision processes", "Deep RL", "Applications"],
-    subtopics: [
-      "Q-learning, policy gradients",
-      "DQN, PPO, A3C",
-      "Game playing, robotics",
-    ],
-    practical: "Train an agent with OpenAI Gym. Assignment: RL for grid-world.",
-  },
-  {
-    name: "Advanced Topics",
-    icon: BarChart,
-    topics: [
-      "Generative AI",
-      "AI for science",
-      "Federated learning",
-      "Multimodal models",
-    ],
-    subtopics: [
-      "Diffusion models, advanced GANs",
-      "Drug discovery, climate modeling",
-      "Privacy-preserving AI",
-      "Combining vision, text, audio",
-    ],
-    practical:
-      "Experiment with diffusion models. Assignment: Research an AI trend.",
-  },
-  {
-    name: "AI Ethics & Deployment",
+    name: "CSP (Constraint Satisfaction Problems)",
     icon: BookOpen,
-    topics: ["Bias mitigation", "Model deployment", "MLOps", "Regulations"],
-    subtopics: [
-      "Explainability, fairness",
-      "APIs, cloud platforms (AWS, GCP)",
-      "Model monitoring, CI/CD",
-      "GDPR, AI Act",
-    ],
-    practical: "Deploy a model with Flask. Assignment: Audit model for bias.",
+    topics: [],
+    subtopics: [],
+    practical: "",
   },
   {
-    name: "Capstone Project",
+    name: "Knowledge Representation",
+    icon: MessageCircle,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "Logical Inference",
+    icon: BarChart,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "Reasoning under Uncertainty",
+    icon: Zap,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "Automated Planning",
+    icon: Cpu,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "Robotics and Vision",
+    icon: Network,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "AI Ethics",
+    icon: BookOpen,
+    topics: [],
+    subtopics: [],
+    practical: "",
+  },
+  {
+    name: "Practical Applications and AI Overview",
     icon: CheckCircle,
-    topics: ["Project design", "Implementation", "Presentation"],
-    subtopics: [
-      "Choose a domain (e.g., healthcare)",
-      "Data collection, model training, deployment",
-      "Demo and findings",
-    ],
-    practical: "Build and present an end-to-end AI solution.",
+    topics: [],
+    subtopics: [],
+    practical: "",
   },
 ];
 
@@ -185,13 +122,7 @@ export default function AI() {
   const [scrollY, setScrollY] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [progress, setProgress] = useState(
-    syllabusData.reduce(
-      (acc, topic) => ({
-        ...acc,
-        [topic.name]: 0, // Initialize progress as percentage
-      }),
-      {}
-    )
+    syllabusData.reduce((acc, topic) => ({ ...acc, [topic.name]: 0 }), {})
   );
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
@@ -228,12 +159,11 @@ export default function AI() {
   };
 
   const handleCardClick = (topicName) => {
-    if (topicName.toLowerCase() === "introduction") {
-      navigate(`/ai/introduction`);
-    } else {
-      const formattedName = topicName.toLowerCase().replace(/\s+/g, "-");
-      navigate(`/ai/${formattedName}`);
-    }
+    const formattedName = topicName
+      .toLowerCase()
+      .replace(/[\s()]+/g, "_")
+      .replace(/_+/g, "_");
+    navigate(`/ai/${formattedName}`);
   };
 
   const filteredData = syllabusData.filter(
@@ -253,7 +183,6 @@ export default function AI() {
 
   return (
     <div className={`gradai-app ${themeClass}`}>
-      {/* Navbar */}
       <nav className={`navbar ${scrollY > 50 ? "scrolled" : ""}`}>
         <div className="nav-brand">
           <Brain className="nav-icon" />
@@ -275,7 +204,6 @@ export default function AI() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <header
         className="hero"
         style={{ transform: `translateY(${scrollY * 0.2}px)` }}
@@ -286,7 +214,6 @@ export default function AI() {
         <p>Master AI: Fundamentals to cutting-edge applications.</p>
       </header>
 
-      {/* Main Syllabus */}
       <main className="main-content">
         <section className="syllabus">
           <div className="syllabus-header">
@@ -319,7 +246,7 @@ export default function AI() {
                         className="progress-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          updateProgress(topic.name, 100); // Mark as completed sets to 100%
+                          updateProgress(topic.name, 100);
                         }}
                       >
                         <CheckCircle
@@ -339,7 +266,6 @@ export default function AI() {
           </div>
         </section>
 
-        {/* Sidebar */}
         <aside className="sidebar">
           <section className="progress-section">
             <h2>My Progress</h2>
@@ -359,6 +285,7 @@ export default function AI() {
               ))}
             </div>
           </section>
+
           <section className="notes-section">
             <h2>My Notes</h2>
             <div className="notes-container">
@@ -392,7 +319,6 @@ export default function AI() {
         </aside>
       </main>
 
-      {/* Footer */}
       <footer className="footer">
         <p>
           &copy; 2025 GradAI. Explore more at{" "}

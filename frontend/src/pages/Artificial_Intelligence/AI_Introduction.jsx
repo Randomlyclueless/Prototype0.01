@@ -20,7 +20,7 @@ import AlanTuring from "./AlanTuring.webp";
 import Evolution from "./Evolution.webp";
 import DeepLearning from "./DeepLearning.webp"; // Assuming you have a DeepLearning image
 
-const AIIntroduction = () => {
+const Introduction = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [vantaLoaded, setVantaLoaded] = useState(false);
@@ -690,4 +690,4 @@ const AIIntroduction = () => {
   );
 };
 
-export default AIIntroduction;
+export default Introduction;

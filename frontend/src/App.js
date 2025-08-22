@@ -12,12 +12,9 @@ import Progress from "./pages/Progress";
 
 // Core Subjects
 import AI from "./pages/Artificial_Intelligence/AI";
-import ML from "./pages/Artificial_Intelligence/AI_MLFundamentals";
-import DL from "./pages/Artificial_Intelligence/AI_DeepLearning";
-import NLP from "./pages/Artificial_Intelligence/AI_NLP";
-import CV from "./pages/Artificial_Intelligence/AI_CV";
+import Introduction from "./pages/Artificial_Intelligence/AI_Introduction";
+
 import DS from "./pages/DS";
-import Introduction from "./pages/Artificial_Intelligence/Introduction";
 
 // New Pages
 import Login from "./pages/Login";
@@ -58,20 +55,12 @@ export default function App() {
             <Route path="/build" element={<Build />} />{" "}
             <Route path="/tools" element={<Tools />} />{" "}
             <Route path="/progress" element={<Progress />} />{" "}
-            <Route path="/ai/introduction" element={<Introduction />} />{" "}
-            <Route path="/ai" element={<AI />} />{" "}
-            <Route path="/ml" element={<ML />} />{" "}
-            <Route path="/dl" element={<DL />} />{" "}
-            <Route path="/nlp" element={<NLP />} />{" "}
-            <Route path="/cv" element={<CV />} />{" "}
             <Route path="/ds" element={<DS />} />{" "}
-            <Route
-              path="/login
-                "
-              element={<Login />}
-            />{" "}
+            <Route path="/login" element={<Login />} />{" "}
             <Route path="/signup" element={<Signup />} />{" "}
             <Route path="/landing" element={<Landing />} />{" "}
+            <Route path="/ai" element={<AI />} />{" "}
+            <Route path="/ai/introduction" element={<Introduction />} />{" "}
           </Routes>
         )}{" "}
       </Router>{" "}
