@@ -1,4 +1,3 @@
-// Landing.jsx
 import React, { useState } from "react";
 import {
   Brain,
@@ -21,25 +20,21 @@ import Spline from "@splinetool/react-spline";
 export default function Landing() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
-  const navItems = ["Dashboard", "Learn", "Build", "Tools", "Progress"];
+  const navItems = [
+    { name: "Dashboard", path: "/" },
+    { name: "Learn", path: "/learn" },
+    { name: "Contests", path: "/contests" },
+    { name: "Tools", path: "/tools" },
+    { name: "Progress", path: "/progress" },
+  ];
 
   const coreSubjects = [
-    { name: "Artificial Intelligence", code: "AI", icon: Brain, link: "/ai" },
-    { name: "Machine Learning", code: "ML", icon: Cpu, link: "/ml" },
-    { name: "Deep Learning", code: "DL", icon: Network, link: "/dl" },
-    {
-      name: "Natural Language Processing",
-      code: "NLP",
-      icon: MessageCircle,
-      link: "/nlp",
-    },
-    { name: "Computer Vision", code: "CV", icon: Eye, link: "/cv" },
-    {
-      name: "Data Science & Analytics",
-      code: "DS",
-      icon: BarChart,
-      link: "/ds",
-    },
+    { name: "Artificial Intelligence", icon: Brain, link: "/ai" },
+    { name: "Machine Learning", icon: Cpu, link: "/ml" },
+    { name: "Deep Learning", icon: Network, link: "/dl" },
+    { name: "Natural Language Processing", icon: MessageCircle, link: "/nlp" },
+    { name: "Computer Vision", icon: Eye, link: "/cv" },
+    { name: "Data Science & Analytics", icon: BarChart, link: "/ds" },
   ];
 
   const features = [
@@ -51,9 +46,9 @@ export default function Landing() {
     },
     {
       icon: Wrench,
-      title: "Build",
-      description: "Project templates and coaching",
-      link: "/build",
+      title: "Contests",
+      description: "View all AI/ML/DS/DSA competitions",
+      link: "/contests",
     },
     {
       icon: Zap,
@@ -69,10 +64,8 @@ export default function Landing() {
     },
   ];
 
-  const themeClass = isDarkMode ? "dark" : "";
-
   return (
-    <div className={`landing-app ${themeClass}`}>
+    <div className={`landing-app ${isDarkMode ? "dark" : ""}`}>
       {/* Hero Section */}
       <div className="hero-spline">
         <Spline scene="https://prod.spline.design/C838h8XHWYtxM-C0/scene.splinecode" />
@@ -82,10 +75,10 @@ export default function Landing() {
             <span>GradAI</span>
           </div>
           <div className="nav-links">
-            {navItems.map((item) => (
-              <a key={item} href="/#">
-                {item}
-              </a>
+            {navItems.map(({ name, path }) => (
+              <Link key={name} to={path}>
+                {name}
+              </Link>
             ))}
           </div>
           <div className="nav-actions">
@@ -159,23 +152,24 @@ export default function Landing() {
 
         /* Navbar */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; position: absolute; top: 0; width: 100%; z-index: 10; background: rgba(0,0,0,0.4); }
-        .nav-links a { margin: 0 0.8rem; text-decoration: none; color: #fff; }
-        .nav-actions button { margin-left: 0.5rem; }
+        .nav-links a { margin: 0 0.8rem; text-decoration: none; color: #fff; font-weight: 500; }
+        .nav-links a:hover { color: #ff88cc; }
+        .nav-actions button { margin-left: 0.5rem; cursor: pointer; }
 
         /* Sections */
         .content section { padding: 4rem 2rem; text-align: center; }
 
-        /* Feature Cards Grid */
+        /* Feature Cards */
         .feature-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
         .feature-card { padding: 1.5rem; border-radius: 16px; background: #280039; box-shadow: 0 0 20px #ff88cc66, 0 0 40px #28003988; transition: transform 0.3s ease, box-shadow 0.3s ease; min-width: 180px; max-width: 300px; text-decoration: none; color: #fff; }
         .feature-card:hover { transform: translateY(-6px); box-shadow: 0 0 30px #ff88ccaa, 0 0 50px #280039bb; }
         .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
-        /* Subject Cards Grid */
+        /* Subjects */
         .subject-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
         .subject-card { padding: 1rem; border-radius: 16px; border: 1px solid #ff88cc; box-shadow: 0 0 10px #ff88cc50; min-width: 160px; max-width: 280px; text-decoration: none; color: #fff; }
 
-        /* Profile Section */
+        /* Profile */
         .my-profile { margin-top: 3rem; }
         .profile-card { display: inline-block; padding: 2rem; border-radius: 16px; background: #111; box-shadow: 0 0 20px #ff88cc66; text-align: center; min-width: 250px; }
         .profile-card button { margin-top: 1rem; padding: 0.5rem 1rem; border: none; border-radius: 8px; background: #ff88cc; color: #000; cursor: pointer; }

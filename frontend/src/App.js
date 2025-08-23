@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeContext";
-import "bootstrap/dist/css/bootstrap.min.css"; // ✅ Enable Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Main Pages
 import HomePage from "./pages/HomePage";
 import Learn from "./pages/Learn";
-import Build from "./pages/Build";
 import Tools from "./pages/Tools";
 import Progress from "./pages/Progress";
 
 // Core Subjects
 import AI from "./pages/Artificial_Intelligence/AI";
 import Introduction from "./pages/Artificial_Intelligence/AI_Introduction";
-
 import DS from "./pages/DS";
 
 // New Pages
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Landing from "./pages/Landing";
+
+// ✅ Contest Page
+import Contest from "./pages/Contests/Contest";
 
 // Components
 import SplashScreen from "./components/SplashScreen";
@@ -49,18 +50,18 @@ export default function App() {
           <SplashScreen fadeOut={fadeOut} onFinish={handleSplashFinish} />
         ) : (
           <Routes>
-            {" "}
-            {/* Main Pages */} <Route path="/" element={<HomePage />} />{" "}
+            <Route path="/" element={<HomePage />} />{" "}
+            <Route path="/landing" element={<Landing />} />{" "}
             <Route path="/learn" element={<Learn />} />{" "}
-            <Route path="/build" element={<Build />} />{" "}
             <Route path="/tools" element={<Tools />} />{" "}
             <Route path="/progress" element={<Progress />} />{" "}
             <Route path="/ds" element={<DS />} />{" "}
-            <Route path="/login" element={<Login />} />{" "}
-            <Route path="/signup" element={<Signup />} />{" "}
-            <Route path="/landing" element={<Landing />} />{" "}
             <Route path="/ai" element={<AI />} />{" "}
             <Route path="/ai/introduction" element={<Introduction />} />{" "}
+            <Route path="/login" element={<Login />} />{" "}
+            <Route path="/signup" element={<Signup />} />{" "}
+            {/* ✅ New Contest Page Route */}{" "}
+            <Route path="/contests" element={<Contest />} />{" "}
           </Routes>
         )}{" "}
       </Router>{" "}
