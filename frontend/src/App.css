@@ -75,3 +75,11 @@
     opacity: 1;
   }
 }
+
+.highlight {
+  background-color: yellow;
+}
+
+.underline {
+  text-decoration: underline;
+}

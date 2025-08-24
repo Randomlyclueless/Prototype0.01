@@ -1,21 +1,61 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSignup = () => {
-    alert(`Signup Successful for ${email}`);
-    navigate("/login"); // Redirect to login page
+  const handleSignup = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/signup", // backend port 5000
+        { name, email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      // Save token and user info
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      alert("Signup Successful!");
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+
+      if (err.response) {
+        // Server responded with a status other than 2xx
+        setError(err.response.data.message || "Something went wrong");
+      } else if (err.request) {
+        // Request made but no response
+        setError("Server did not respond. Try again later.");
+      } else {
+        // Other errors
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="signup-page">
       <div className="signup-box">
         <h2>Sign Up</h2>
-        <form className="signup-form" onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()} className="signup-form">
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
           <input
             type="email"
             placeholder="Email"
@@ -30,7 +70,10 @@ export default function Signup() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button onClick={handleSignup}>Sign Up</button>
+          <button type="button" onClick={handleSignup} disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </div>
 
@@ -44,7 +87,6 @@ export default function Signup() {
           color: #fff;
           font-family: 'Segoe UI', sans-serif;
         }
-
         .signup-box {
           background: #111;
           padding: 2rem;
@@ -54,17 +96,8 @@ export default function Signup() {
           width: 320px;
           text-align: center;
         }
-
-        .signup-box h2 {
-          margin-bottom: 1.5rem;
-        }
-
-        .signup-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
+        .signup-box h2 { margin-bottom: 1.5rem; }
+        .signup-form { display: flex; flex-direction: column; gap: 1rem; }
         .signup-form input {
           padding: 0.7rem;
           border-radius: 8px;
@@ -73,11 +106,7 @@ export default function Signup() {
           background: #222;
           color: #fff;
         }
-
-        .signup-form input::placeholder {
-          color: #aaa;
-        }
-
+        .signup-form input::placeholder { color: #aaa; }
         .signup-form button {
           padding: 0.7rem;
           border-radius: 8px;
@@ -88,7 +117,6 @@ export default function Signup() {
           cursor: pointer;
           transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-
         .signup-form button:hover {
           background: #ffaadf;
           box-shadow: 0 0 10px #ffaadf;

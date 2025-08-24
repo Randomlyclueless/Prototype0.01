@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const hardcodedUser = {
-    email: "user@example.com",
-    password: "password123",
-  };
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email === hardcodedUser.email && password === hardcodedUser.password) {
-      setError("");
-      navigate("/landing");
-    } else {
-      setError("Invalid email or password");
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      // Save token and user info
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigate("/landing"); // redirect after successful login
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.message || "Invalid credentials");
+      } else if (err.request) {
+        setError("Server did not respond. Try again later.");
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,7 +59,9 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
           {error && <p className="error">{error}</p>}
         </form>
       </div>
@@ -56,7 +76,6 @@ export default function Login() {
           color: #fff;
           font-family: 'Segoe UI', sans-serif;
         }
-
         .login-box {
           background: #111;
           padding: 2rem;
@@ -66,17 +85,8 @@ export default function Login() {
           width: 320px;
           text-align: center;
         }
-
-        .login-box h2 {
-          margin-bottom: 1.5rem;
-        }
-
-        .login-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
+        .login-box h2 { margin-bottom: 1.5rem; }
+        .login-form { display: flex; flex-direction: column; gap: 1rem; }
         .login-form input {
           padding: 0.7rem;
           border-radius: 8px;
@@ -85,11 +95,7 @@ export default function Login() {
           background: #222;
           color: #fff;
         }
-
-        .login-form input::placeholder {
-          color: #aaa;
-        }
-
+        .login-form input::placeholder { color: #aaa; }
         .login-form button {
           padding: 0.7rem;
           border-radius: 8px;
@@ -100,12 +106,10 @@ export default function Login() {
           cursor: pointer;
           transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-
         .login-form button:hover {
           background: #ffaadf;
           box-shadow: 0 0 10px #ffaadf;
         }
-
         .error {
           color: #ff5555;
           margin-top: 0.5rem;

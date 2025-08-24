@@ -178,7 +178,7 @@ export default function AI() {
     groupedData.push(filteredData.slice(i, i + 3));
   }
 
-  const navItems = ["Home", "Learn", "Build", "Tools", "Progress"];
+  const navItems = ["Home", "Learn", "Contests", "Resume Builder", "Progress"];
   const themeClass = isDarkMode ? "dark" : "";
 
   return (

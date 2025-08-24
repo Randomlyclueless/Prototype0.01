@@ -24,7 +24,7 @@ export default function Landing() {
     { name: "Dashboard", path: "/" },
     { name: "Learn", path: "/learn" },
     { name: "Contests", path: "/contests" },
-    { name: "Tools", path: "/tools" },
+    { name: "Resume Builder", path: "/resumebuilder" }, // ✅ Corrected
     { name: "Progress", path: "/progress" },
   ];
 
@@ -52,9 +52,9 @@ export default function Landing() {
     },
     {
       icon: Zap,
-      title: "Tools",
+      title: "Resume Builder",
       description: "Summarizers, writers, helpers",
-      link: "/tools",
+      link: "/resumebuilder", // ✅ Corrected
     },
     {
       icon: BarChart3,

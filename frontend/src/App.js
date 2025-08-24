@@ -6,12 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Main Pages
 import HomePage from "./pages/HomePage";
 import Learn from "./pages/Learn";
-import Tools from "./pages/Tools";
+import ResumeBuilder from "./pages/ResumeBuilder"; // ✅ Fixed import name
 import Progress from "./pages/Progress";
 
 // Core Subjects
 import AI from "./pages/Artificial_Intelligence/AI";
 import Introduction from "./pages/Artificial_Intelligence/AI_Introduction";
+import KnowledgeRepresentation from "./pages/Artificial_Intelligence/KnowledgeRepresentation";
 import DS from "./pages/DS";
 
 // New Pages
@@ -49,20 +50,26 @@ export default function App() {
         {showSplash ? (
           <SplashScreen fadeOut={fadeOut} onFinish={handleSplashFinish} />
         ) : (
-          <Routes>
-            <Route path="/" element={<HomePage />} />{" "}
-            <Route path="/landing" element={<Landing />} />{" "}
-            <Route path="/learn" element={<Learn />} />{" "}
-            <Route path="/tools" element={<Tools />} />{" "}
-            <Route path="/progress" element={<Progress />} />{" "}
-            <Route path="/ds" element={<DS />} />{" "}
-            <Route path="/ai" element={<AI />} />{" "}
-            <Route path="/ai/introduction" element={<Introduction />} />{" "}
-            <Route path="/login" element={<Login />} />{" "}
-            <Route path="/signup" element={<Signup />} />{" "}
-            {/* ✅ New Contest Page Route */}{" "}
-            <Route path="/contests" element={<Contest />} />{" "}
-          </Routes>
+          <>
+            {" "}
+            <Routes>
+              <Route path="/" element={<HomePage />} />{" "}
+              <Route path="/landing" element={<Landing />} />{" "}
+              <Route path="/learn" element={<Learn />} />{" "}
+              <Route path="/resumebuilder" element={<ResumeBuilder />} />{" "}
+              <Route path="/progress" element={<Progress />} />{" "}
+              <Route path="/ds" element={<DS />} />{" "}
+              <Route path="/ai" element={<AI />} />{" "}
+              <Route path="/ai/introduction" element={<Introduction />} />{" "}
+              <Route
+                path="/ai/knowledge_representation"
+                element={<KnowledgeRepresentation />}
+              />{" "}
+              <Route path="/login" element={<Login />} />{" "}
+              <Route path="/signup" element={<Signup />} />{" "}
+              <Route path="/contests" element={<Contest />} />{" "}
+            </Routes>{" "}
+          </>
         )}{" "}
       </Router>{" "}
     </ThemeProvider>

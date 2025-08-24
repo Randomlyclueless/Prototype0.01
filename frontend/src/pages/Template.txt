@@ -1,0 +1,82 @@
+import React, { useState } from "react";
+import SelectionToolbar from "../../components/SelectionToolbar"; // Adjust path as needed
+import NotesSidebar from "../NotesSidebar"; // Adjust path as needed
+
+const YourPageName = () => {
+  const [summary, setSummary] = useState("");
+
+  return (
+    <div style={{ display: "flex" }}>
+      <div style={{ 
+        flex: 1, 
+        padding: "20px", 
+        marginRight: "340px", // Space for notes sidebar
+        lineHeight: "1.6",
+        fontSize: "16px"
+      }}>
+        {/* Your page title */}
+        <h1 style={{ color: "#333", marginBottom: "20px" }}>
+          Your Page Title Here
+        </h1>
+
+        {/* Always include the SelectionToolbar */}
+        <SelectionToolbar onSummaryGenerated={setSummary} />
+
+        {/* Display summary if available */}
+        {summary && (
+          <div
+            style={{
+              background: "#e8f5e8",
+              padding: "15px",
+              borderRadius: "8px",
+              marginBottom: "20px",
+              border: "1px solid #4caf50"
+            }}
+          >
+            <h4 style={{ margin: "0 0 10px 0", color: "#2e7d32" }}>
+              🤖 AI Summary:
+            </h4>
+            <div style={{ color: "#1b5e20" }}>{summary}</div>
+            <button
+              onClick={() => setSummary("")}
+              style={{
+                marginTop: "10px",
+                padding: "5px 10px",
+                backgroundColor: "#4caf50",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "12px"
+              }}
+            >
+              Clear Summary
+            </button>
+          </div>
+        )}
+
+        {/* Your page content goes here - make sure it's selectable */}
+        <div style={{ userSelect: "text" }}>
+          {/* Replace this with your actual content */}
+          <h2>Your Section Title</h2>
+          <p>
+            Your content goes here. Make sure all your text content 
+            is within this div so it can be selected for highlighting, 
+            underlining, and summarizing.
+          </p>
+          
+          <p>
+            Add more paragraphs, headings, lists, etc. as needed.
+            All of this content will be selectable and work with
+            the toolbar features.
+          </p>
+        </div>
+      </div>
+
+      {/* Always include the NotesSidebar */}
+      <NotesSidebar />
+    </div>
+  );
+};
+
+export default YourPageName;

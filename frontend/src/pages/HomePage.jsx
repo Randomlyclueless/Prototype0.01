@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 export default function GradAIHomepage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
-  const navItems = ["Home", "Learn", "Contests", "Tools", "Progress"];
+  const navItems = ["Home", "Learn", "Contests", "Resume Builder", "Progress"];
 
   const coreSubjects = [
     { name: "Artificial Intelligence", code: "AI", icon: Brain },
@@ -41,7 +41,11 @@ export default function GradAIHomepage() {
       title: "Build",
       description: "Project templates and coaching",
     },
-    { icon: Zap, title: "Tools", description: "Summarizers, writers, helpers" },
+    {
+      icon: Zap,
+      title: "Resume Builder",
+      description: "Summarizers, writers, helpers",
+    },
     {
       icon: BarChart3,
       title: "Progress",
