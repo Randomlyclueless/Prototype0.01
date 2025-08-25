@@ -5,16 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../components/ThemeContext";
 import {
   Brain,
-  Sun,
-  Moon,
-  Cpu,
-  Network,
+  BookOpen,
+  // Wrench,
+  // BarChart3,
   MessageCircle,
   Eye,
+  Cpu,
+  Network,
   BarChart,
   Zap,
+  Sun,
+  Moon,
   CheckCircle,
-  BookOpen,
 } from "lucide-react";
 
 import "./AI.css";
@@ -146,10 +148,7 @@ export default function AI() {
   const addNote = (e) => {
     e.preventDefault();
     if (newNote.trim()) {
-      setNotes((prev) => [
-        ...prev,
-        { id: Date.now(), text: newNote, topic: "General" },
-      ]);
+      setNotes((prev) => [...prev, { id: Date.now(), text: newNote }]);
       setNewNote("");
     }
   };
@@ -178,7 +177,14 @@ export default function AI() {
     groupedData.push(filteredData.slice(i, i + 3));
   }
 
-  const navItems = ["Home", "Learn", "Contests", "Resume Builder", "Progress"];
+  const navItems = [
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Research Paper Analyzer", path: "/ai/research_paper_analyzer" },
+    { name: "Contests", path: "/contests" },
+    { name: "Resume Builder", path: "/resumebuilder" },
+    { name: "Weekly Tracker", path: "/weekly_tracker" },
+  ];
+
   const themeClass = isDarkMode ? "dark" : "";
 
   return (
@@ -190,17 +196,21 @@ export default function AI() {
         </div>
         <div className="nav-links">
           {navItems.map((item) => (
-            <a key={item} href={`/${item.toLowerCase()}`}>
-              {item}
+            <a key={item.name} href={item.path}>
+              {item.name}
             </a>
           ))}
         </div>
         <div className="nav-actions">
-          <button onClick={() => setIsDarkMode(!isDarkMode)}>
+          <button type="button" onClick={() => setIsDarkMode(!isDarkMode)}>
             {isDarkMode ? <Sun /> : <Moon />}
           </button>
-          <button className="login-btn">Login</button>
-          <button className="signup-btn">Sign Up</button>
+          <button type="button" className="login-btn">
+            Login
+          </button>
+          <button type="button" className="signup-btn">
+            Sign Up
+          </button>
         </div>
       </nav>
 
@@ -227,6 +237,7 @@ export default function AI() {
               />
             </div>
           </div>
+
           <div className="card-container">
             {groupedData.map((group, groupIndex) => (
               <div key={`group-${groupIndex}`} className="card-group">
@@ -244,6 +255,7 @@ export default function AI() {
                       <h3>🧠 {topic.name}</h3>
                       <button
                         className="progress-btn"
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           updateProgress(topic.name, 100);
@@ -270,7 +282,7 @@ export default function AI() {
           <section className="progress-section">
             <h2>My Progress</h2>
             <div className="progress-container">
-              {syllabusData.slice(0, 2).map((topic) => (
+              {syllabusData.map((topic) => (
                 <div key={topic.name} className="progress-item">
                   <span className="progress-label">{topic.name}</span>
                   <div className="progress-bar">
@@ -293,6 +305,7 @@ export default function AI() {
                 <div key={note.id} className="note-item">
                   <p>{note.text}</p>
                   <button
+                    type="button"
                     className="delete-note-btn"
                     onClick={() => deleteNote(note.id)}
                   >

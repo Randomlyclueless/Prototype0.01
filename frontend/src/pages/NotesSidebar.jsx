@@ -5,6 +5,8 @@ export default function NotesSidebar() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
   const [loadingSummary, setLoadingSummary] = useState(false);
+  const [highlightColor, setHighlightColor] = useState("yellow");
+  const [toolbarLoading, setToolbarLoading] = useState(false);
 
   useEffect(() => {
     fetchNotes();
@@ -50,6 +52,64 @@ export default function NotesSidebar() {
     }
   };
 
+  // Selection toolbar actions
+  const getSelectedText = () => {
+    const selection = window.getSelection();
+    return selection ? selection.toString().trim() : "";
+  };
+
+  const handleToolbarSummarize = async () => {
+    const text = getSelectedText();
+    if (!text) return alert("Select text to summarize!");
+
+    setToolbarLoading(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/summarize", {
+        text,
+      });
+      alert("Summary: " + res.data.summary);
+    } catch (err) {
+      console.error(err);
+      alert("Error summarizing selected text.");
+    } finally {
+      setToolbarLoading(false);
+    }
+  };
+
+  const handleHighlight = () => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return alert("Select text first");
+
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    const colorMap = {
+      yellow: "#ffff99",
+      red: "#ffcccc",
+      lightblue: "#ccf2ff",
+      green: "#ccffcc",
+    };
+    span.style.backgroundColor = colorMap[highlightColor] || "#ffff99";
+    span.style.padding = "1px 2px";
+    span.style.borderRadius = "2px";
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+    selection.removeAllRanges();
+  };
+
+  const handleUnderline = () => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return alert("Select text first");
+
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    span.style.textDecoration = "underline";
+    span.style.textDecorationColor = "#007bff";
+    span.style.textDecorationThickness = "2px";
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+    selection.removeAllRanges();
+  };
+
   return (
     <div
       style={{
@@ -66,9 +126,86 @@ export default function NotesSidebar() {
         fontFamily: "'Segoe UI', sans-serif",
       }}
     >
-      <h2 style={{ marginBottom: "15px", color: "#333" }}>My Notes</h2>
+      <h2 style={{ marginBottom: "15px", color: "#333" }}>📝 Notes & Tools</h2>
 
-      {/* New Note Input */}
+      {/* --- Selection Toolbar --- */}
+      <div
+        style={{
+          marginBottom: "20px",
+          padding: "10px",
+          background: "#f0f4f8",
+          borderRadius: "8px",
+          border: "1px solid #ddd",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
+        <button
+          onClick={handleToolbarSummarize}
+          disabled={toolbarLoading}
+          style={{
+            padding: "8px",
+            backgroundColor: toolbarLoading ? "#6c757d" : "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: toolbarLoading ? "not-allowed" : "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          {toolbarLoading ? "Summarizing..." : "✨ Summarize Selected Text"}
+        </button>
+
+        <select
+          value={highlightColor}
+          onChange={(e) => setHighlightColor(e.target.value)}
+          style={{
+            padding: "6px",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+          }}
+        >
+          <option value="yellow">🟡 Yellow</option>
+          <option value="red">🔴 Red</option>
+          <option value="lightblue">🔵 Blue</option>
+          <option value="green">🟢 Green</option>
+        </select>
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={handleHighlight}
+            style={{
+              flex: 1,
+              padding: "8px",
+              backgroundColor: "#ffc107",
+              border: "none",
+              borderRadius: "6px",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            🖍 Highlight
+          </button>
+          <button
+            onClick={handleUnderline}
+            style={{
+              flex: 1,
+              padding: "8px",
+              backgroundColor: "#28a745",
+              border: "none",
+              borderRadius: "6px",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            📝 Underline
+          </button>
+        </div>
+      </div>
+
+      {/* --- New Note Input --- */}
       <textarea
         value={newNote}
         onChange={(e) => setNewNote(e.target.value)}
@@ -100,7 +237,7 @@ export default function NotesSidebar() {
         Add Note
       </button>
 
-      {/* Notes List */}
+      {/* --- Notes List --- */}
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {notes.map((note) => (
           <div
@@ -150,7 +287,7 @@ export default function NotesSidebar() {
               }}
               disabled={loadingSummary}
             >
-              {loadingSummary ? "Summarizing..." : "Summarize"}
+              {loadingSummary ? "Summarizing..." : "Summarize Note"}
             </button>
           </div>
         ))}

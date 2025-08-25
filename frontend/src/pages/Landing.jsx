@@ -21,11 +21,11 @@ export default function Landing() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const navItems = [
-    { name: "Dashboard", path: "/" },
-    { name: "Learn", path: "/learn" },
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Research Paper Analyzer", path: "/ai/research_paper_analyzer" },
     { name: "Contests", path: "/contests" },
-    { name: "Resume Builder", path: "/resumebuilder" }, // ✅ Corrected
-    { name: "Progress", path: "/progress" },
+    { name: "Resume Builder", path: "/resumebuilder" },
+    { name: "Weekly Tracker", path: "/weekly_tracker" },
   ];
 
   const coreSubjects = [
@@ -40,9 +40,9 @@ export default function Landing() {
   const features = [
     {
       icon: BookOpen,
-      title: "Learn",
-      description: "AI-powered doubt solving and tutoring",
-      link: "/learn",
+      title: "Research Paper Analyzer",
+      description: "Summarize & analyze research instantly",
+      link: "/ai/research_paper_analyzer",
     },
     {
       icon: Wrench,
@@ -54,19 +54,18 @@ export default function Landing() {
       icon: Zap,
       title: "Resume Builder",
       description: "Summarizers, writers, helpers",
-      link: "/resumebuilder", // ✅ Corrected
+      link: "/resumebuilder",
     },
     {
       icon: BarChart3,
-      title: "Progress",
+      title: "Weekly Tracker",
       description: "Flashcards, badges, growth",
-      link: "/progress",
+      link: "/weekly_tracker",
     },
   ];
 
   return (
     <div className={`landing-app ${isDarkMode ? "dark" : ""}`}>
-      {/* Hero Section */}
       <div className="hero-spline">
         <Spline scene="https://prod.spline.design/C838h8XHWYtxM-C0/scene.splinecode" />
         <nav className="navbar">
@@ -94,9 +93,7 @@ export default function Landing() {
         </nav>
       </div>
 
-      {/* Content */}
       <div className="content">
-        {/* Features */}
         <section className="features">
           <h2>Platform Features</h2>
           <div className="feature-grid">
@@ -110,7 +107,6 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* Core Subjects */}
         <section className="subjects">
           <h2>Core Subjects</h2>
           <div className="subject-grid">
@@ -123,59 +119,69 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* Profile Section */}
-        <section className="my-profile">
-          <h2>My Profile</h2>
-          <div className="profile-card card">
-            <User className="card-icon" size={48} />
-            <h3>John Doe</h3>
-            <p>Email: john.doe@example.com</p>
-            <Link to="/profile">
-              <button>Edit Profile</button>
-            </Link>
-          </div>
-        </section>
-
         <footer className="footer">
           <p>&copy; 2025 GradAI. All rights reserved.</p>
         </footer>
       </div>
 
-      {/* Styles */}
+      {/* Chatbot button opens Hugging Face Space */}
+      <div className="chatbot">
+        <div
+          className="chatbot-header"
+          onClick={() =>
+            window.open(
+              "https://huggingface.co/spaces/bhumiboinwad/Career_guide_2.0",
+              "_blank",
+              "width=400,height=600"
+            )
+          }
+        >
+          Career Bot
+        </div>
+      </div>
+
       <style>{`
         * { box-sizing: border-box; }
         body, html, .landing-app { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; height: 100%; overflow-x: hidden; background: #000; color: #fff; }
 
-        /* Hero */
-        .hero-spline { width: 100%; height: 500px; position: relative; overflow: hidden; }
+        .hero-spline { width: 100%; height: 600px; position: relative; overflow: hidden; }
         .hero-spline canvas { width: 100% !important; height: 100% !important; }
 
-        /* Navbar */
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; position: absolute; top: 0; width: 100%; z-index: 10; background: rgba(0,0,0,0.4); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; position: absolute; top: 0; width: 100%; z-index: 10; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); }
         .nav-links a { margin: 0 0.8rem; text-decoration: none; color: #fff; font-weight: 500; }
         .nav-links a:hover { color: #ff88cc; }
         .nav-actions button { margin-left: 0.5rem; cursor: pointer; }
+        .profile-btn { background: #ff88cc; border: none; border-radius: 8px; padding: 0.4rem 0.8rem; color: #000; cursor: pointer; margin-left: 1rem; }
 
-        /* Sections */
         .content section { padding: 4rem 2rem; text-align: center; }
 
-        /* Feature Cards */
         .feature-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
         .feature-card { padding: 1.5rem; border-radius: 16px; background: #280039; box-shadow: 0 0 20px #ff88cc66, 0 0 40px #28003988; transition: transform 0.3s ease, box-shadow 0.3s ease; min-width: 180px; max-width: 300px; text-decoration: none; color: #fff; }
         .feature-card:hover { transform: translateY(-6px); box-shadow: 0 0 30px #ff88ccaa, 0 0 50px #280039bb; }
         .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
-        /* Subjects */
         .subject-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
         .subject-card { padding: 1rem; border-radius: 16px; border: 1px solid #ff88cc; box-shadow: 0 0 10px #ff88cc50; min-width: 160px; max-width: 280px; text-decoration: none; color: #fff; }
 
-        /* Profile */
-        .my-profile { margin-top: 3rem; }
-        .profile-card { display: inline-block; padding: 2rem; border-radius: 16px; background: #111; box-shadow: 0 0 20px #ff88cc66; text-align: center; min-width: 250px; }
-        .profile-card button { margin-top: 1rem; padding: 0.5rem 1rem; border: none; border-radius: 8px; background: #ff88cc; color: #000; cursor: pointer; }
-
-        /* Footer */
         .footer { text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaa; }
+
+        /* Chatbot button styles */
+        .chatbot {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 50;
+          font-family: 'Segoe UI', sans-serif;
+        }
+        .chatbot-header {
+          background: #ff88cc;
+          color: #000;
+          padding: 0.6rem 1rem;
+          font-weight: bold;
+          cursor: pointer;
+          border-radius: 12px;
+          text-align: center;
+        }
       `}</style>
     </div>
   );

@@ -22,4 +22,6 @@ app.use("/api/notes", notesRoutes);
 const summarizeRoutes = require("./routes/summarize");
 app.use("/api/summarize", summarizeRoutes);
 
+app.use("/api/weekly_tasks", require("./routes/weeklyTasks"));
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
